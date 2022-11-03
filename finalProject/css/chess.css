@@ -1,0 +1,47 @@
+/*
+CSS sheet for Chess Minigame
+Joshua Rogers
+CSCI 225 Final Project
+
+01 color
+02 layout
+03 font
+04 other decoration
+*/
+
+/*01 Color*/
+#chessBoard {
+    background-color: gray;
+    width: 960px;
+    height: 960px;
+    table-layout: fixed;
+}
+.chessSquare{
+    background-color: burlywood;
+}
+
+/*02 layout*/
+#chessBoard {
+    border-collapse: separate;
+    border-spacing: 0px;
+    padding: 0;
+}
+
+#chessBoard tr,
+td {
+    padding: 0;
+    margin: 0;
+}
+
+#chessBoard tr {
+    height: 120px;
+}
+
+.chessSquare {
+    width: 120px;
+    height: 120px;
+    border: black solid 1px;
+    padding: 0;
+    margin: 0;
+
+}

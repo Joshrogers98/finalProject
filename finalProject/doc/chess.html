@@ -5,80 +5,16 @@
     <meta charset="UTF-8">
     <title>Final Project - Chess</title>
     <link rel="stylesheet" href="../css/chess.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 </head>
 
 <body>
     <div class="chessBoard">
         <button id="resetBoard">New Game</button>
+        <button id="flip">Flip Board</button>
         <table id="chessBoard"></table>
-        <script>
-            //this creates the board for the game
-            var lettersArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
-            function newGame() {
-                document.getElementById('chessBoard').innerHTML = "";
-                var makeBoard = "";
-                //set the board
-                for (var i = 0; i < 8; i++) {
-                    //create the rows
-                    makeBoard += '<tr class="rank' + (i + 1) + '">';
-                    for (var j = 0; j < 8; j++) {
-                        //create the files(columns)
-                        makeBoard += '<td class="file' + lettersArray[j] + '"><button class="chessSquare"  id="' + lettersArray[j] + (i + 1) + '"></button></td>'
-                    }
-                    makeBoard += '</tr>'
-                }
-                document.getElementById('chessBoard').innerHTML = makeBoard;
-                //set pieces
-                //White pieces
-
-                document.getElementById('A1').innerHTML = '<img src="../img/WR.png">'
-                document.getElementById('B1').innerHTML = '<img src="../img/WN.png">'
-                document.getElementById('C1').innerHTML = '<img src="../img/WB.png">'
-                document.getElementById('D1').innerHTML = '<img src="../img/WQ.png">'
-                document.getElementById('E1').innerHTML = '<img src="../img/WK.png">'
-                document.getElementById('F1').innerHTML = '<img src="../img/WB.png">'
-                document.getElementById('G1').innerHTML = '<img src="../img/WN.png">'
-                document.getElementById('H1').innerHTML = '<img src="../img/WR.png">'
-                //White pawns 
-                document.getElementById('A2').innerHTML = '<img src="../img/WP.png">'
-                document.getElementById('B2').innerHTML = '<img src="../img/WP.png">'
-                document.getElementById('C2').innerHTML = '<img src="../img/WP.png">'
-                document.getElementById('D2').innerHTML = '<img src="../img/WP.png">'
-                document.getElementById('E2').innerHTML = '<img src="../img/WP.png">'
-                document.getElementById('F2').innerHTML = '<img src="../img/WP.png">'
-                document.getElementById('G2').innerHTML = '<img src="../img/WP.png">'
-                document.getElementById('H2').innerHTML = '<img src="../img/WP.png">' 
-                //Black pawns
-                document.getElementById('A7').innerHTML = '<img src="../img/BP.png">'
-                document.getElementById('B7').innerHTML = '<img src="../img/BP.png">'
-                document.getElementById('C7').innerHTML = '<img src="../img/BP.png">'
-                document.getElementById('D7').innerHTML = '<img src="../img/BP.png">'
-                document.getElementById('E7').innerHTML = '<img src="../img/BP.png">'
-                document.getElementById('F7').innerHTML = '<img src="../img/BP.png">'
-                document.getElementById('G7').innerHTML = '<img src="../img/BP.png">'
-                document.getElementById('H7').innerHTML = '<img src="../img/BP.png">'
-                //Black pieces
-                document.getElementById('A8').innerHTML = '<img src="../img/BR.png">'
-                document.getElementById('B8').innerHTML = '<img src="../img/BN.png">'
-                document.getElementById('C8').innerHTML = '<img src="../img/BB.png">'
-                document.getElementById('D8').innerHTML = '<img src="../img/BQ.png">'
-                document.getElementById('E8').innerHTML = '<img src="../img/BK.png">'
-                document.getElementById('F8').innerHTML = '<img src="../img/BB.png">'
-                document.getElementById('G8').innerHTML = '<img src="../img/BN.png">'
-                document.getElementById('H8').innerHTML = '<img src="../img/BR.png">' 
-
-                //checkerboard pattern
-                var table = document.getElementById('chessBoard');
-                var trows = table.getElementsByTagName('tr');
-                
-
-            }
-            document.getElementById('resetBoard').addEventListener('click', newGame, false);
-            window.onload = newGame;
-
-            
-        </script>
     </div>
+    <script src="../js/chess.js"></script>
 </body>
 
 </html>

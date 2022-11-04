@@ -12,35 +12,53 @@ CSCI 225 Final Project
 /*01 Color*/
 #chessBoard {
     background-color: gray;
-    width: 960px;
-    height: 960px;
-    table-layout: fixed;
 }
-.chessSquare{
+.chessPiece{
+    background: transparent;
+}
+.chessPiece-selected{
+    background-color: yellow;
+}
+.chessPiece-move{
+    background-color: aqua;
+}
+.chessPiece-capture{
+    background-color: red;
+}
+td[name="light"]{
     background-color: burlywood;
+}
+td[name="dark"]{
+    background-color: saddlebrown;
 }
 
 /*02 layout*/
+.chessBoard{
+    text-align: center;
+}
 #chessBoard {
-    border-collapse: separate;
+    border-collapse: collapse;
     border-spacing: 0px;
     padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 960px;
+    height: 960px;
+    table-layout: grid;
 }
 
 #chessBoard tr,
 td {
+    height: 120px;
+    width: 120px;
     padding: 0;
     margin: 0;
 }
 
-#chessBoard tr {
-    height: 120px;
-}
-
-.chessSquare {
-    width: 120px;
-    height: 120px;
-    border: black solid 1px;
+.chessPiece , .chessPiece-selected , .chessPiece-move , .chessPiece-capture{
+    width: 115px;
+    height: 115px;
+    border: 0;
     padding: 0;
     margin: 0;
 

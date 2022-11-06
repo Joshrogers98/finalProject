@@ -2,7 +2,9 @@
 const lettersArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
 const piecesArray = ['WP', 'WR', 'WN', 'WB', 'WQ', 'WK', 'BP', 'BR', 'BN', 'BB', 'BQ', 'BK', 'empty'];
 
+
 function newGame() {
+    var turnCounter = 1;
     document.getElementById('chessBoard').innerHTML = "";
     var makeBoard = "";
     //set the board
@@ -94,6 +96,8 @@ function newGame() {
     //function to show where a piece can move
     var pieceIndex = null;
     function pieceMoves() {
+
+        //reset movable squares
 
         var movableSquares = document.querySelectorAll('.chessPiece-move');
         var capSquares = document.querySelectorAll('.chessPiece-capture');
@@ -881,12 +885,64 @@ function newGame() {
                 default: //see case 12
                     break;
             }
+
+            //function to move a piece
+            var currentPiece = document.getElementsByClassName('chessPiece-selected')[0].getAttribute('name');
+            var currentPieceColor = document.getElementsByClassName('chessPiece-selected')[0].getAttribute('name').charAt(0);
+            var currentPieceID = document.getElementsByClassName('chessPiece-selected')[0].getAttribute('id');
+            console.log(currentPieceColor);
+            
+            function doMove() {
+
+                if ((turnCounter + 2) % 2 != 0 && currentPieceColor == 'W') {
+                    this.setAttribute('name', currentPiece);
+                    document.getElementById(currentPieceID).setAttribute('name', 'empty');
+                    for (var i = 0; i <= 12; i++) {
+                        var addImg = document.querySelectorAll('[name="' + piecesArray[i] + '"');
+                        for (var j = 0; j < addImg.length; j++) {
+                            if (i != 12) {
+                                addImg[j].innerHTML = '<img src="../img/' + piecesArray[i] + '.png">';
+                            } else {
+                                addImg[j].innerHTML = "";
+                            }
+                        }
+                    }
+                    turnCounter++;
+                    console.log(turnCounter);
+                }else if((turnCounter + 2) % 2 == 0 && currentPieceColor == 'B'){
+                    this.setAttribute('name', currentPiece);
+                    document.getElementById(currentPieceID).setAttribute('name', 'empty');
+                    for (var i = 0; i <= 12; i++) {
+                        var addImg = document.querySelectorAll('[name="' + piecesArray[i] + '"');
+                        for (var j = 0; j < addImg.length; j++) {
+                            if (i != 12) {
+                                addImg[j].innerHTML = '<img src="../img/' + piecesArray[i] + '.png">';
+                            } else {
+                                addImg[j].innerHTML = "";
+                            }
+                        }
+                    }
+                    turnCounter++;
+                    console.log(turnCounter);
+                }
+                currentPiece = '';
+                currentPieceColor ='';
+                currentPieceID = '';
+            }
+
+            for (var i = 0; i < document.querySelectorAll('.chessPiece-move').length; i++) {
+                document.querySelectorAll('.chessPiece-move')[i].addEventListener('click', doMove, false);
+            }
+            for (var i = 0; i < document.querySelectorAll('.chessPiece-capture').length; i++) {
+                document.querySelectorAll('.chessPiece-capture')[i].addEventListener('click', doMove, false);
+            }
         }
     }
     for (var i = 0; i < unselectedPiece.length; i++) {
         document.getElementsByClassName('chessPiece')[i].addEventListener('click', pieceMoves, false);
     }
 
+    //add images to named pieces
     for (var i = 0; i < 12; i++) {
         var addImg = document.querySelectorAll('[name="' + piecesArray[i] + '"');
         for (var j = 0; j < addImg.length; j++) {

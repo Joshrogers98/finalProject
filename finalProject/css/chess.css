@@ -55,9 +55,9 @@ td {
     margin: 0;
 }
 
-.chessPiece , .chessPiece-selected , .chessPiece-move , .chessPiece-capture{
-    width: 115px;
-    height: 115px;
+.chessPiece , .chessPiece-selected , .chessPiece-move{
+    width: 116px;
+    height: 116px;
     border: 0;
     padding: 0;
     margin: 0;

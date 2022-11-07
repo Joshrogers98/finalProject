@@ -5,6 +5,7 @@ const piecesArray = ['WP', 'WR', 'WN', 'WB', 'WQ', 'WK', 'BP', 'BR', 'BN', 'BB',
 
 function newGame() {
     var turnCounter = 1;
+    console.log(turnCounter + " White's turn");
     document.getElementById('chessBoard').innerHTML = "";
     var makeBoard = "";
     //set the board
@@ -100,23 +101,23 @@ function newGame() {
         //reset movable squares
 
         var movableSquares = document.querySelectorAll('.chessPiece-move');
-        var capSquares = document.querySelectorAll('.chessPiece-capture');
         //remove highlights on lost focus
         if (movableSquares.length) {
             for (var i = 0; i < movableSquares.length; i++) {
                 movableSquares[i].setAttribute('class', 'chessPiece');
             }
         }
-        if (capSquares.length) {
-            for (var i = 0; i < capSquares.length; i++) {
-                capSquares[i].setAttribute('class', 'chessPiece');
-            }
-        }
 
         if (document.getElementsByClassName('chessPiece-selected').length) {
 
             //find selected piece
+
+            //function to move a piece
+
+            var pieceColor = document.getElementsByClassName('chessPiece-selected')[0].getAttribute('name').charAt(0);
+            var pieceID = document.getElementsByClassName('chessPiece-selected')[0].getAttribute('id');
             var pieceName = document.getElementsByClassName('chessPiece-selected')[0].getAttribute('name');
+            
             for (var i = 0; i < piecesArray.length; i++) {
                 if (pieceName == piecesArray[i]) {
                     pieceIndex = i;
@@ -136,10 +137,10 @@ function newGame() {
                     var diagRight = document.getElementById(lettersArray[x - 1] + (y + 1) + 'button');
                     var diagLeft = document.getElementById(lettersArray[x + 1] + (y + 1) + 'button');
                     if (x != 0 && diagRight.getAttribute('name') != piecesArray[12] && diagRight.getAttribute('name').charAt(0) != 'W') {
-                        diagRight.setAttribute('class', 'chessPiece-capture');
+                        diagRight.setAttribute('class', 'chessPiece-move');
                     }
                     if (x != 7 && diagLeft.getAttribute('name') != piecesArray[12] && diagLeft.getAttribute('name').charAt(0) != 'W') {
-                        diagLeft.setAttribute('class', 'chessPiece-capture');
+                        diagLeft.setAttribute('class', 'chessPiece-move');
                     }
                     if (document.getElementById('rank2').contains(selectedPiece[0])) {
                         if (twoSpace.getAttribute('name') == piecesArray[12] && oneSpace.getAttribute('name') == piecesArray[12]) {
@@ -164,7 +165,7 @@ function newGame() {
                         if ((document.getElementById(lettersArray[right] + y + 'button').getAttribute('name').charAt(0) == 'W')) {
                             break;
                         } else if ((document.getElementById(lettersArray[right] + y + 'button').getAttribute('name').charAt(0) == 'B')) {
-                            document.getElementById(lettersArray[right] + y + 'button').setAttribute('class', 'chessPiece-capture');
+                            document.getElementById(lettersArray[right] + y + 'button').setAttribute('class', 'chessPiece-move');
                             break;
                         } else if ((document.getElementById(lettersArray[right] + y + 'button').getAttribute('name') == piecesArray[12])) {
                             document.getElementById(lettersArray[right] + y + 'button').setAttribute('class', 'chessPiece-move')
@@ -180,7 +181,7 @@ function newGame() {
                         if ((document.getElementById(lettersArray[left] + y + 'button').getAttribute('name').charAt(0) == 'W')) {
                             break;
                         } else if ((document.getElementById(lettersArray[left] + y + 'button').getAttribute('name').charAt(0) == 'B')) {
-                            document.getElementById(lettersArray[left] + y + 'button').setAttribute('class', 'chessPiece-capture');
+                            document.getElementById(lettersArray[left] + y + 'button').setAttribute('class', 'chessPiece-move');
                             break;
                         } else if ((document.getElementById(lettersArray[left] + y + 'button').getAttribute('name') == piecesArray[12])) {
                             document.getElementById(lettersArray[left] + y + 'button').setAttribute('class', 'chessPiece-move')
@@ -196,7 +197,7 @@ function newGame() {
                         if ((document.getElementById(lettersArray[x] + down + 'button').getAttribute('name').charAt(0) == 'W')) {
                             break;
                         } else if ((document.getElementById(lettersArray[x] + down + 'button').getAttribute('name').charAt(0) == 'B')) {
-                            document.getElementById(lettersArray[x] + down + 'button').setAttribute('class', 'chessPiece-capture');
+                            document.getElementById(lettersArray[x] + down + 'button').setAttribute('class', 'chessPiece-move');
                             break;
                         } else if ((document.getElementById(lettersArray[x] + down + 'button').getAttribute('name') == piecesArray[12])) {
                             document.getElementById(lettersArray[x] + down + 'button').setAttribute('class', 'chessPiece-move')
@@ -212,7 +213,7 @@ function newGame() {
                         if ((document.getElementById(lettersArray[x] + up + 'button').getAttribute('name').charAt(0) == 'W')) {
                             break;
                         } else if ((document.getElementById(lettersArray[x] + up + 'button').getAttribute('name').charAt(0) == 'B')) {
-                            document.getElementById(lettersArray[x] + up + 'button').setAttribute('class', 'chessPiece-capture');
+                            document.getElementById(lettersArray[x] + up + 'button').setAttribute('class', 'chessPiece-move');
                             break;
                         } else if ((document.getElementById(lettersArray[x] + up + 'button').getAttribute('name') == piecesArray[12])) {
                             document.getElementById(lettersArray[x] + up + 'button').setAttribute('class', 'chessPiece-move')
@@ -241,7 +242,7 @@ function newGame() {
                             if (jumpArray[i].getAttribute('name') == piecesArray[12]) {
                                 jumpArray[i].setAttribute('class', 'chessPiece-move');
                             } else if (jumpArray[i].getAttribute('name').charAt(0) == 'B') {
-                                jumpArray[i].setAttribute('class', 'chessPiece-capture');
+                                jumpArray[i].setAttribute('class', 'chessPiece-move');
                             }
                         }
                     }
@@ -261,7 +262,7 @@ function newGame() {
                         if (bishopMove.getAttribute('name').charAt(0) == 'W') {
                             break;
                         } else if ((bishopMove.getAttribute('name').charAt(0) == 'B')) {
-                            bishopMove.setAttribute('class', 'chessPiece-capture');
+                            bishopMove.setAttribute('class', 'chessPiece-move');
                             break;
                         } else if (bishopMove.getAttribute('name') == piecesArray[12]) {
                             bishopMove.setAttribute('class', 'chessPiece-move')
@@ -281,7 +282,7 @@ function newGame() {
                         if (bishopMove.getAttribute('name').charAt(0) == 'W') {
                             break;
                         } else if (bishopMove.getAttribute('name').charAt(0) == 'B') {
-                            bishopMove.setAttribute('class', 'chessPiece-capture');
+                            bishopMove.setAttribute('class', 'chessPiece-move');
                             break;
                         } else if (bishopMove.getAttribute('name') == piecesArray[12]) {
                             bishopMove.setAttribute('class', 'chessPiece-move')
@@ -300,7 +301,7 @@ function newGame() {
                         if (bishopMove.getAttribute('name').charAt(0) == 'W') {
                             break;
                         } else if (bishopMove.getAttribute('name').charAt(0) == 'B') {
-                            bishopMove.setAttribute('class', 'chessPiece-capture');
+                            bishopMove.setAttribute('class', 'chessPiece-move');
                             break;
                         } else if (bishopMove.getAttribute('name') == piecesArray[12]) {
                             bishopMove.setAttribute('class', 'chessPiece-move')
@@ -319,7 +320,7 @@ function newGame() {
                         if (bishopMove.getAttribute('name').charAt(0) == 'W') {
                             break;
                         } else if (bishopMove.getAttribute('name').charAt(0) == 'B') {
-                            bishopMove.setAttribute('class', 'chessPiece-capture');
+                            bishopMove.setAttribute('class', 'chessPiece-move');
                             break;
                         } else if (bishopMove.getAttribute('name') == piecesArray[12]) {
                             bishopMove.setAttribute('class', 'chessPiece-move')
@@ -341,7 +342,7 @@ function newGame() {
                         if ((document.getElementById(lettersArray[right] + y + 'button').getAttribute('name').charAt(0) == 'W')) {
                             break;
                         } else if ((document.getElementById(lettersArray[right] + y + 'button').getAttribute('name').charAt(0) == 'B')) {
-                            document.getElementById(lettersArray[right] + y + 'button').setAttribute('class', 'chessPiece-capture');
+                            document.getElementById(lettersArray[right] + y + 'button').setAttribute('class', 'chessPiece-move');
                             break;
                         } else if ((document.getElementById(lettersArray[right] + y + 'button').getAttribute('name') == piecesArray[12])) {
                             document.getElementById(lettersArray[right] + y + 'button').setAttribute('class', 'chessPiece-move')
@@ -357,7 +358,7 @@ function newGame() {
                         if ((document.getElementById(lettersArray[left] + y + 'button').getAttribute('name').charAt(0) == 'W')) {
                             break;
                         } else if ((document.getElementById(lettersArray[left] + y + 'button').getAttribute('name').charAt(0) == 'B')) {
-                            document.getElementById(lettersArray[left] + y + 'button').setAttribute('class', 'chessPiece-capture');
+                            document.getElementById(lettersArray[left] + y + 'button').setAttribute('class', 'chessPiece-move');
                             break;
                         } else if ((document.getElementById(lettersArray[left] + y + 'button').getAttribute('name') == piecesArray[12])) {
                             document.getElementById(lettersArray[left] + y + 'button').setAttribute('class', 'chessPiece-move')
@@ -373,7 +374,7 @@ function newGame() {
                         if ((document.getElementById(lettersArray[x] + down + 'button').getAttribute('name').charAt(0) == 'W')) {
                             break;
                         } else if ((document.getElementById(lettersArray[x] + down + 'button').getAttribute('name').charAt(0) == 'B')) {
-                            document.getElementById(lettersArray[x] + down + 'button').setAttribute('class', 'chessPiece-capture');
+                            document.getElementById(lettersArray[x] + down + 'button').setAttribute('class', 'chessPiece-move');
                             break;
                         } else if ((document.getElementById(lettersArray[x] + down + 'button').getAttribute('name') == piecesArray[12])) {
                             document.getElementById(lettersArray[x] + down + 'button').setAttribute('class', 'chessPiece-move')
@@ -389,7 +390,7 @@ function newGame() {
                         if ((document.getElementById(lettersArray[x] + up + 'button').getAttribute('name').charAt(0) == 'W')) {
                             break;
                         } else if ((document.getElementById(lettersArray[x] + up + 'button').getAttribute('name').charAt(0) == 'B')) {
-                            document.getElementById(lettersArray[x] + up + 'button').setAttribute('class', 'chessPiece-capture');
+                            document.getElementById(lettersArray[x] + up + 'button').setAttribute('class', 'chessPiece-move');
                             break;
                         } else if ((document.getElementById(lettersArray[x] + up + 'button').getAttribute('name') == piecesArray[12])) {
                             document.getElementById(lettersArray[x] + up + 'button').setAttribute('class', 'chessPiece-move')
@@ -409,7 +410,7 @@ function newGame() {
                         if (bishopMove.getAttribute('name').charAt(0) == 'W') {
                             break;
                         } else if ((bishopMove.getAttribute('name').charAt(0) == 'B')) {
-                            bishopMove.setAttribute('class', 'chessPiece-capture');
+                            bishopMove.setAttribute('class', 'chessPiece-move');
                             break;
                         } else if (bishopMove.getAttribute('name') == piecesArray[12]) {
                             bishopMove.setAttribute('class', 'chessPiece-move')
@@ -429,7 +430,7 @@ function newGame() {
                         if (bishopMove.getAttribute('name').charAt(0) == 'W') {
                             break;
                         } else if (bishopMove.getAttribute('name').charAt(0) == 'B') {
-                            bishopMove.setAttribute('class', 'chessPiece-capture');
+                            bishopMove.setAttribute('class', 'chessPiece-move');
                             break;
                         } else if (bishopMove.getAttribute('name') == piecesArray[12]) {
                             bishopMove.setAttribute('class', 'chessPiece-move')
@@ -448,7 +449,7 @@ function newGame() {
                         if (bishopMove.getAttribute('name').charAt(0) == 'W') {
                             break;
                         } else if (bishopMove.getAttribute('name').charAt(0) == 'B') {
-                            bishopMove.setAttribute('class', 'chessPiece-capture');
+                            bishopMove.setAttribute('class', 'chessPiece-move');
                             break;
                         } else if (bishopMove.getAttribute('name') == piecesArray[12]) {
                             bishopMove.setAttribute('class', 'chessPiece-move')
@@ -467,7 +468,7 @@ function newGame() {
                         if (bishopMove.getAttribute('name').charAt(0) == 'W') {
                             break;
                         } else if (bishopMove.getAttribute('name').charAt(0) == 'B') {
-                            bishopMove.setAttribute('class', 'chessPiece-capture');
+                            bishopMove.setAttribute('class', 'chessPiece-move');
                             break;
                         } else if (bishopMove.getAttribute('name') == piecesArray[12]) {
                             bishopMove.setAttribute('class', 'chessPiece-move')
@@ -495,7 +496,7 @@ function newGame() {
                             if (kingMoveArray[i].getAttribute('name') == piecesArray[12]) {
                                 kingMoveArray[i].setAttribute('class', 'chessPiece-move');
                             } else if (kingMoveArray[i].getAttribute('name').charAt(0) == 'B') {
-                                kingMoveArray[i].setAttribute('class', 'chessPiece-capture');
+                                kingMoveArray[i].setAttribute('class', 'chessPiece-move');
                             }
                         }
                     }
@@ -511,10 +512,10 @@ function newGame() {
                     var diagRight = document.getElementById(lettersArray[x - 1] + (y - 1) + 'button');
                     var diagLeft = document.getElementById(lettersArray[x + 1] + (y - 1) + 'button');
                     if (x != 0 && diagRight.getAttribute('name') != piecesArray[12] && diagRight.getAttribute('name').charAt(0) == 'W') {
-                        diagRight.setAttribute('class', 'chessPiece-capture');
+                        diagRight.setAttribute('class', 'chessPiece-move');
                     }
                     if (x != 7 && diagLeft.getAttribute('name') != piecesArray[12] && diagLeft.getAttribute('name').charAt(0) == 'W') {
-                        diagLeft.setAttribute('class', 'chessPiece-capture');
+                        diagLeft.setAttribute('class', 'chessPiece-move');
                     }
                     if (document.getElementById('rank7').contains(selectedPiece[0])) {
                         if (twoSpace.getAttribute('name') == piecesArray[12] && oneSpace.getAttribute('name') == piecesArray[12]) {
@@ -540,7 +541,7 @@ function newGame() {
                         if ((document.getElementById(lettersArray[right] + y + 'button').getAttribute('name').charAt(0) == 'B')) {
                             break;
                         } else if ((document.getElementById(lettersArray[right] + y + 'button').getAttribute('name').charAt(0) == 'W')) {
-                            document.getElementById(lettersArray[right] + y + 'button').setAttribute('class', 'chessPiece-capture');
+                            document.getElementById(lettersArray[right] + y + 'button').setAttribute('class', 'chessPiece-move');
                             break;
                         } else if ((document.getElementById(lettersArray[right] + y + 'button').getAttribute('name') == piecesArray[12])) {
                             document.getElementById(lettersArray[right] + y + 'button').setAttribute('class', 'chessPiece-move')
@@ -556,7 +557,7 @@ function newGame() {
                         if ((document.getElementById(lettersArray[left] + y + 'button').getAttribute('name').charAt(0) == 'B')) {
                             break;
                         } else if ((document.getElementById(lettersArray[left] + y + 'button').getAttribute('name').charAt(0) == 'W')) {
-                            document.getElementById(lettersArray[left] + y + 'button').setAttribute('class', 'chessPiece-capture');
+                            document.getElementById(lettersArray[left] + y + 'button').setAttribute('class', 'chessPiece-move');
                             break;
                         } else if ((document.getElementById(lettersArray[left] + y + 'button').getAttribute('name') == piecesArray[12])) {
                             document.getElementById(lettersArray[left] + y + 'button').setAttribute('class', 'chessPiece-move')
@@ -572,7 +573,7 @@ function newGame() {
                         if ((document.getElementById(lettersArray[x] + down + 'button').getAttribute('name').charAt(0) == 'B')) {
                             break;
                         } else if ((document.getElementById(lettersArray[x] + down + 'button').getAttribute('name').charAt(0) == 'W')) {
-                            document.getElementById(lettersArray[x] + down + 'button').setAttribute('class', 'chessPiece-capture');
+                            document.getElementById(lettersArray[x] + down + 'button').setAttribute('class', 'chessPiece-move');
                             break;
                         } else if ((document.getElementById(lettersArray[x] + down + 'button').getAttribute('name') == piecesArray[12])) {
                             document.getElementById(lettersArray[x] + down + 'button').setAttribute('class', 'chessPiece-move')
@@ -588,7 +589,7 @@ function newGame() {
                         if ((document.getElementById(lettersArray[x] + up + 'button').getAttribute('name').charAt(0) == 'B')) {
                             break;
                         } else if ((document.getElementById(lettersArray[x] + up + 'button').getAttribute('name').charAt(0) == 'W')) {
-                            document.getElementById(lettersArray[x] + up + 'button').setAttribute('class', 'chessPiece-capture');
+                            document.getElementById(lettersArray[x] + up + 'button').setAttribute('class', 'chessPiece-move');
                             break;
                         } else if ((document.getElementById(lettersArray[x] + up + 'button').getAttribute('name') == piecesArray[12])) {
                             document.getElementById(lettersArray[x] + up + 'button').setAttribute('class', 'chessPiece-move')
@@ -618,7 +619,7 @@ function newGame() {
                             if (jumpArray[i].getAttribute('name') == piecesArray[12]) {
                                 jumpArray[i].setAttribute('class', 'chessPiece-move');
                             } else if (jumpArray[i].getAttribute('name').charAt(0) == 'W') {
-                                jumpArray[i].setAttribute('class', 'chessPiece-capture');
+                                jumpArray[i].setAttribute('class', 'chessPiece-move');
                             }
                         }
                     }
@@ -639,7 +640,7 @@ function newGame() {
                         if (bishopMove.getAttribute('name').charAt(0) == 'B') {
                             break;
                         } else if ((bishopMove.getAttribute('name').charAt(0) == 'W')) {
-                            bishopMove.setAttribute('class', 'chessPiece-capture');
+                            bishopMove.setAttribute('class', 'chessPiece-move');
                             break;
                         } else if (bishopMove.getAttribute('name') == piecesArray[12]) {
                             bishopMove.setAttribute('class', 'chessPiece-move')
@@ -659,7 +660,7 @@ function newGame() {
                         if (bishopMove.getAttribute('name').charAt(0) == 'B') {
                             break;
                         } else if (bishopMove.getAttribute('name').charAt(0) == 'W') {
-                            bishopMove.setAttribute('class', 'chessPiece-capture');
+                            bishopMove.setAttribute('class', 'chessPiece-move');
                             break;
                         } else if (bishopMove.getAttribute('name') == piecesArray[12]) {
                             bishopMove.setAttribute('class', 'chessPiece-move')
@@ -678,7 +679,7 @@ function newGame() {
                         if (bishopMove.getAttribute('name').charAt(0) == 'B') {
                             break;
                         } else if (bishopMove.getAttribute('name').charAt(0) == 'W') {
-                            bishopMove.setAttribute('class', 'chessPiece-capture');
+                            bishopMove.setAttribute('class', 'chessPiece-move');
                             break;
                         } else if (bishopMove.getAttribute('name') == piecesArray[12]) {
                             bishopMove.setAttribute('class', 'chessPiece-move')
@@ -697,7 +698,7 @@ function newGame() {
                         if (bishopMove.getAttribute('name').charAt(0) == 'B') {
                             break;
                         } else if (bishopMove.getAttribute('name').charAt(0) == 'W') {
-                            bishopMove.setAttribute('class', 'chessPiece-capture');
+                            bishopMove.setAttribute('class', 'chessPiece-move');
                             break;
                         } else if (bishopMove.getAttribute('name') == piecesArray[12]) {
                             bishopMove.setAttribute('class', 'chessPiece-move')
@@ -718,7 +719,7 @@ function newGame() {
                         if ((document.getElementById(lettersArray[right] + y + 'button').getAttribute('name').charAt(0) == 'B')) {
                             break;
                         } else if ((document.getElementById(lettersArray[right] + y + 'button').getAttribute('name').charAt(0) == 'W')) {
-                            document.getElementById(lettersArray[right] + y + 'button').setAttribute('class', 'chessPiece-capture');
+                            document.getElementById(lettersArray[right] + y + 'button').setAttribute('class', 'chessPiece-move');
                             break;
                         } else if ((document.getElementById(lettersArray[right] + y + 'button').getAttribute('name') == piecesArray[12])) {
                             document.getElementById(lettersArray[right] + y + 'button').setAttribute('class', 'chessPiece-move')
@@ -734,7 +735,7 @@ function newGame() {
                         if ((document.getElementById(lettersArray[left] + y + 'button').getAttribute('name').charAt(0) == 'B')) {
                             break;
                         } else if ((document.getElementById(lettersArray[left] + y + 'button').getAttribute('name').charAt(0) == 'W')) {
-                            document.getElementById(lettersArray[left] + y + 'button').setAttribute('class', 'chessPiece-capture');
+                            document.getElementById(lettersArray[left] + y + 'button').setAttribute('class', 'chessPiece-move');
                             break;
                         } else if ((document.getElementById(lettersArray[left] + y + 'button').getAttribute('name') == piecesArray[12])) {
                             document.getElementById(lettersArray[left] + y + 'button').setAttribute('class', 'chessPiece-move')
@@ -750,7 +751,7 @@ function newGame() {
                         if ((document.getElementById(lettersArray[x] + down + 'button').getAttribute('name').charAt(0) == 'B')) {
                             break;
                         } else if ((document.getElementById(lettersArray[x] + down + 'button').getAttribute('name').charAt(0) == 'W')) {
-                            document.getElementById(lettersArray[x] + down + 'button').setAttribute('class', 'chessPiece-capture');
+                            document.getElementById(lettersArray[x] + down + 'button').setAttribute('class', 'chessPiece-move');
                             break;
                         } else if ((document.getElementById(lettersArray[x] + down + 'button').getAttribute('name') == piecesArray[12])) {
                             document.getElementById(lettersArray[x] + down + 'button').setAttribute('class', 'chessPiece-move')
@@ -766,7 +767,7 @@ function newGame() {
                         if ((document.getElementById(lettersArray[x] + up + 'button').getAttribute('name').charAt(0) == 'B')) {
                             break;
                         } else if ((document.getElementById(lettersArray[x] + up + 'button').getAttribute('name').charAt(0) == 'W')) {
-                            document.getElementById(lettersArray[x] + up + 'button').setAttribute('class', 'chessPiece-capture');
+                            document.getElementById(lettersArray[x] + up + 'button').setAttribute('class', 'chessPiece-move');
                             break;
                         } else if ((document.getElementById(lettersArray[x] + up + 'button').getAttribute('name') == piecesArray[12])) {
                             document.getElementById(lettersArray[x] + up + 'button').setAttribute('class', 'chessPiece-move')
@@ -785,7 +786,7 @@ function newGame() {
                         if (bishopMove.getAttribute('name').charAt(0) == 'B') {
                             break;
                         } else if ((bishopMove.getAttribute('name').charAt(0) == 'W')) {
-                            bishopMove.setAttribute('class', 'chessPiece-capture');
+                            bishopMove.setAttribute('class', 'chessPiece-move');
                             break;
                         } else if (bishopMove.getAttribute('name') == piecesArray[12]) {
                             bishopMove.setAttribute('class', 'chessPiece-move')
@@ -805,7 +806,7 @@ function newGame() {
                         if (bishopMove.getAttribute('name').charAt(0) == 'B') {
                             break;
                         } else if (bishopMove.getAttribute('name').charAt(0) == 'W') {
-                            bishopMove.setAttribute('class', 'chessPiece-capture');
+                            bishopMove.setAttribute('class', 'chessPiece-move');
                             break;
                         } else if (bishopMove.getAttribute('name') == piecesArray[12]) {
                             bishopMove.setAttribute('class', 'chessPiece-move')
@@ -824,7 +825,7 @@ function newGame() {
                         if (bishopMove.getAttribute('name').charAt(0) == 'B') {
                             break;
                         } else if (bishopMove.getAttribute('name').charAt(0) == 'W') {
-                            bishopMove.setAttribute('class', 'chessPiece-capture');
+                            bishopMove.setAttribute('class', 'chessPiece-move');
                             break;
                         } else if (bishopMove.getAttribute('name') == piecesArray[12]) {
                             bishopMove.setAttribute('class', 'chessPiece-move')
@@ -843,7 +844,7 @@ function newGame() {
                         if (bishopMove.getAttribute('name').charAt(0) == 'B') {
                             break;
                         } else if (bishopMove.getAttribute('name').charAt(0) == 'W') {
-                            bishopMove.setAttribute('class', 'chessPiece-capture');
+                            bishopMove.setAttribute('class', 'chessPiece-move');
                             break;
                         } else if (bishopMove.getAttribute('name') == piecesArray[12]) {
                             bishopMove.setAttribute('class', 'chessPiece-move')
@@ -873,7 +874,7 @@ function newGame() {
                             if (kingMoveArray[i].getAttribute('name') == piecesArray[12]) {
                                 kingMoveArray[i].setAttribute('class', 'chessPiece-move');
                             } else if (kingMoveArray[i].getAttribute('name').charAt(0) == 'W') {
-                                kingMoveArray[i].setAttribute('class', 'chessPiece-capture');
+                                kingMoveArray[i].setAttribute('class', 'chessPiece-move');
                             }
                         }
                     }
@@ -885,18 +886,14 @@ function newGame() {
                 default: //see case 12
                     break;
             }
-
-            //function to move a piece
-            var currentPiece = document.getElementsByClassName('chessPiece-selected')[0].getAttribute('name');
-            var currentPieceColor = document.getElementsByClassName('chessPiece-selected')[0].getAttribute('name').charAt(0);
-            var currentPieceID = document.getElementsByClassName('chessPiece-selected')[0].getAttribute('id');
-            console.log(currentPieceColor);
             
             function doMove() {
+                var destination = pieceName.charAt(1) + this.getAttribute('id').charAt(0) + this.getAttribute('id').charAt(1);
+                    console.log(destination);
 
-                if ((turnCounter + 2) % 2 != 0 && currentPieceColor == 'W') {
-                    this.setAttribute('name', currentPiece);
-                    document.getElementById(currentPieceID).setAttribute('name', 'empty');
+                if ((turnCounter + 2) % 2 != 0 && pieceColor == 'W') {
+                    this.setAttribute('name', pieceName);
+                    document.getElementById(pieceID).setAttribute('name', 'empty');
                     for (var i = 0; i <= 12; i++) {
                         var addImg = document.querySelectorAll('[name="' + piecesArray[i] + '"');
                         for (var j = 0; j < addImg.length; j++) {
@@ -908,10 +905,10 @@ function newGame() {
                         }
                     }
                     turnCounter++;
-                    console.log(turnCounter);
-                }else if((turnCounter + 2) % 2 == 0 && currentPieceColor == 'B'){
-                    this.setAttribute('name', currentPiece);
-                    document.getElementById(currentPieceID).setAttribute('name', 'empty');
+                    console.log(turnCounter + " Black's Turn");
+                }else if((turnCounter + 2) % 2 == 0 && pieceColor == 'B'){
+                    this.setAttribute('name', pieceName);
+                    document.getElementById(pieceID).setAttribute('name', 'empty');
                     for (var i = 0; i <= 12; i++) {
                         var addImg = document.querySelectorAll('[name="' + piecesArray[i] + '"');
                         for (var j = 0; j < addImg.length; j++) {
@@ -923,18 +920,15 @@ function newGame() {
                         }
                     }
                     turnCounter++;
-                    console.log(turnCounter);
+                    console.log(turnCounter + " White's Turn");
                 }
                 currentPiece = '';
                 currentPieceColor ='';
                 currentPieceID = '';
             }
 
-            for (var i = 0; i < document.querySelectorAll('.chessPiece-move').length; i++) {
-                document.querySelectorAll('.chessPiece-move')[i].addEventListener('click', doMove, false);
-            }
-            for (var i = 0; i < document.querySelectorAll('.chessPiece-capture').length; i++) {
-                document.querySelectorAll('.chessPiece-capture')[i].addEventListener('click', doMove, false);
+            for (var i = 0; i < document.getElementsByClassName('chessPiece-move').length; i++) {
+                document.getElementsByClassName('chessPiece-move')[i].addEventListener('click', doMove, false);
             }
         }
     }
